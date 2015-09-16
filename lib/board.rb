@@ -69,18 +69,18 @@ class Board
       count = 1
       loop do
         pos = add_arrays(pos, dir)
-        if @visited[[*pos, *dir]]
-          count += @visited[[*pos, *dir]]
+        if @visited[[*pos, *dir, color]]
+          count += @visited[[*pos, *dir, color]]
           if count >= @win_length
             return true
           else
-            @visited[[*origin, *dir]] = count
+            @visited[[*origin, *dir, color]] = count
             break
           end
         else
           # memo-ize if reached the end of the board
           if !in_range?(pos)
-            @visited[[*origin, *dir]] = count
+            @visited[[*origin, *dir, color]] = count
             break
           end
           # stop searching but don't memo-ize if reached an empty position
@@ -89,7 +89,7 @@ class Board
           end
           # memo-ize if reached a different color piece
           if at(pos).color != color
-            @visited[[*origin, *dir]] = count
+            @visited[[*origin, *dir, color]] = count
             break
           end
           # if all checks are passed move on to the next piece
