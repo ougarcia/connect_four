@@ -83,7 +83,7 @@ class Board
             @visited[[*origin, *dir]] = count
             break
           end
-          # stop checking but don't memo-ize if reached an empty position
+          # stop searching but don't memo-ize if reached an empty position
           if at(pos).nil?
             break
           end

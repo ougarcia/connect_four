@@ -7,5 +7,9 @@ class NullPiece
   def nil?
     true
   end
+  
+  def color
+    nil
+  end
 
 end
