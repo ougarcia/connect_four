@@ -49,27 +49,26 @@ class Board
   def check_direction(dir, origin, count, color)
     pos = add_arrays(origin, dir)
 
+    # create a proc to be called if we want to memoize before we return
+    memoize = Proc.new do
+      @visited[[*@origin, *dir, color]] = count + 1
+      return count
+    end
+
     # check if we've been here before
     if @visited[[*pos, *dir, color]]
       count += @visited[[*pos, *dir, color]]
-      @visited[[*@origin, *dir, color]] = count + 1
-      return count
+      memoize.call
     end
 
-    # memo-ize if reached the end of the board
-    if !in_range?(pos)
-      @visited[[*@origin, *dir, color]] = count + 1
-      return count
-    end
+    # memoize if reached the end of the board
+    memoize.call if !in_range?(pos)
 
-    # stop searching but don't memo-ize if reached an empty position
+    # stop searching but don't memoize if reached an empty position
     return count if at(pos).nil?
 
-    # memo-ize if reached a different color piece
-    if at(pos).color != color
-      @visited[[*@origin, *dir, color]] = count + 1
-      return count
-    end
+    # memoize if reached a different color piece
+    memoize.call if at(pos).color != color
 
     # if all checks are passed move on to the next piece
     check_direction(dir, pos, count + 1, color)
