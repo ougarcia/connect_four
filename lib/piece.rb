@@ -1,16 +1,11 @@
 require 'colorize'
 
 class Piece
-  attr_accessor :pos
-  attr_reader :color
+  attr_reader :pos, :color
 
-  def initialize(color, column)
+  def initialize(color, row, column)
     @color = color
-    @column = column
-  end
-
-  def adjacent
-    [0, 1, 1, -1, -1].permutation(2).to_a.uniq
+    @pos = [row, column]
   end
 
   def nil?

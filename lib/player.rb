@@ -7,8 +7,7 @@ class Player
   end
 
   def take_turn
-    puts "#{@name}'s turn"
-    puts "Choose Column"
+    print "#{@name}'s turn\nChoose column\t"
     response = gets.chomp
     if response.match(/^\d+$/) && response.to_i.between?(0, 9)
       response.to_i
